@@ -1,0 +1,7 @@
+macro(set_if_match VAR_NAME CHECK_NAME STRVAL)
+  if(${CHECK_NAME} STREQUAL "${STRVAL}")
+    set(${VAR_NAME} ON)
+  else()
+    set(${VAR_NAME} OFF)
+  endif()
+endmacro()

@@ -1,0 +1,15 @@
+@startuml
+skinparam roundCorner 15
+
+rectangle "kokkos-profiling-example" as sample_app #ffffff
+rectangle kokkos #eeffee
+rectangle "kokkos-tools" as kokkos_tools
+rectangle caliper
+rectangle apex
+
+sample_app --> kokkos
+sample_app --> kokkos_tools
+kokkos_tools --> caliper
+kokkos_tools --> apex
+
+@enduml

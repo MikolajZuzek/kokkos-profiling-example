@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="252px" preserveAspectRatio="none" style="width:238px;height:252px;" version="1.1" viewBox="0 0 238 252" width="238px" zoomAndPan="magnify"><defs><filter height="300%" id="f1c477l5efgopb" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[ca903db044a1ae533b25e015c92b6729]
+entity sample_app--><rect fill="#FFFFFF" filter="url(#f1c477l5efgopb)" height="37.6094" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1.5;" width="176" x="9" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="156" x="19" y="31.5332">kokkos-profiling-example</text><!--MD5=[9dab03c3ad6f4dde43ed82eebd09427e]
+entity kokkos--><rect fill="#EEFFEE" filter="url(#f1c477l5efgopb)" height="37.6094" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1.5;" width="64" x="7" y="105"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="17" y="129.5332">kokkos</text><!--MD5=[8612f30f48a19844142751294b6bf3d9]
+entity kokkos_tools--><rect fill="#FEFECE" filter="url(#f1c477l5efgopb)" height="37.6094" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1.5;" width="99" x="106.5" y="105"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="116.5" y="129.5332">kokkos-tools</text><!--MD5=[38eff038619a0dff3f2254f86fed9a87]
+entity caliper--><rect fill="#FEFECE" filter="url(#f1c477l5efgopb)" height="37.6094" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1.5;" width="62" x="79" y="203"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="89" y="227.5332">caliper</text><!--MD5=[9b5c3adb47aa6696a5e9b5480733cab7]
+entity apex--><rect fill="#FEFECE" filter="url(#f1c477l5efgopb)" height="37.6094" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1.5;" width="50" x="176" y="203"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30" x="186" y="227.5332">apex</text><!--MD5=[d1bb755c68a8b07b399681fb2c74f984]
+link sample_app to kokkos--><path d="M86.09,45.06 C76.67,60.65 63.02,83.25 52.83,100.11 " fill="none" id="sample_app-to-kokkos" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="50.06,104.7,58.1426,99.0722,52.6493,100.4227,51.2989,94.9294,50.06,104.7" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[c44f78cb3610875656efbf27b3fa2b21]
+link sample_app to kokkos_tools--><path d="M108.1,45.06 C117.68,60.65 131.57,83.25 141.93,100.11 " fill="none" id="sample_app-to-kokkos_tools" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="144.75,104.7,143.4489,94.9375,142.1335,100.4393,136.6317,99.1239,144.75,104.7" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[c5f9f8df8ebd2f4e71b072e4d6ad8130]
+link kokkos_tools to caliper--><path d="M147.35,143.06 C139.88,158.65 129.05,181.25 120.97,198.11 " fill="none" id="kokkos_tools-to-caliper" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="118.77,202.7,126.2595,196.3041,120.9258,198.1886,119.0413,192.8549,118.77,202.7" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[fe3a0756023aaafc14ded9f155135f2f]
+link kokkos_tools to apex--><path d="M164.46,143.06 C171.77,158.65 182.37,181.25 190.27,198.11 " fill="none" id="kokkos_tools-to-apex" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="192.42,202.7,192.2371,192.8528,190.3048,198.1694,184.9882,196.2372,192.42,202.7" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1c8e931a18db0bde809d7aa565c09e7e]
+@startuml
+'left to right direction
+'top to bottom direction
+skinparam roundCorner 15
+
+rectangle "kokkos-profiling-example" as sample_app #ffffff
+rectangle kokkos #eeffee
+rectangle "kokkos-tools" as kokkos_tools
+rectangle caliper
+rectangle apex
+
+sample_app - -> kokkos
+sample_app - -> kokkos_tools
+kokkos_tools - -> caliper
+kokkos_tools - -> apex
+
+'
+@enduml
+
+@startuml
+skinparam roundCorner 15
+
+rectangle "kokkos-profiling-example" as sample_app #ffffff
+rectangle kokkos #eeffee
+rectangle "kokkos-tools" as kokkos_tools
+rectangle caliper
+rectangle apex
+
+sample_app - -> kokkos
+sample_app - -> kokkos_tools
+kokkos_tools - -> caliper
+kokkos_tools - -> apex
+
+@enduml
+
+PlantUML version 1.2021.4(Sun Apr 04 10:49:39 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1250
+Language: pl
+Country: PL
+--></g></svg>

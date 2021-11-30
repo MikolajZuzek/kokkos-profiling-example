@@ -1,0 +1,8 @@
+[submodule "kokkos"]
+	path = kokkos
+	url = https://github.com/NexGenAnalytics/kokkos.git
+	branch = develop
+[submodule "kokkos-tools"]
+	path = kokkos-tools
+	url = https://github.com/NexGenAnalytics/kokkos-tools.git
+	branch = cmake-build-system
