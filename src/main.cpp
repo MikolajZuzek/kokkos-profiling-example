@@ -3,16 +3,37 @@
 #include "kp_all.hpp"
 #include "kernels.hpp"
 
+#if USE_MPI
+#include <mpi.h>
+#endif
+
 //-------------------------------------------------------------------------------------//
 
 int main(int argc, char *argv[])
 {
+#if USE_MPI
+  MPI_Init(&argc, &argv);
+#endif
+  const char *profiler_name = "";
+  const char *profiler_config = "";
 #ifdef KOKKOSTOOLS_HAS_CALIPER
-  auto eventSet = KokkosTools::activate_tool("caliper", "runtime-report(profile.kokkos)");
+  profiler_name = "caliper";
+  profiler_config = "runtime-report(profile.kokkos)";
+#endif
+#if USE_MPI
+  profiler_name = "highwater-mark-mpi";
+#endif
+
+  profiler_name = "vtune-connector";
+  profiler_config = "";
+
+  // TODO: Utilities: common/kernel-filter
+  //                  debugging/kernel-logger
+
+  auto eventSet = KokkosTools::get_event_set(profiler_name, profiler_config);
 
   // Note: callbacks must be set before Kokkos::initialize()
   Kokkos::Tools::Experimental::set_callbacks(eventSet);
-#endif
 
   Kokkos::initialize(argc, argv);
 
@@ -22,6 +43,9 @@ int main(int argc, char *argv[])
   std::cout << std::endl;
 
   Kokkos::finalize();
+#if USE_MPI
+  MPI_Finalize();
+#endif
   return ret_code;
 }
 
