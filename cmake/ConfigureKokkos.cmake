@@ -1,12 +1,18 @@
 set_if_match(Kokkos_ENABLE_DEBUG CMAKE_BUILD_TYPE Debug)
-set(BUILD_SHARED_LIBS ON)
-set(Kokkos_CXX_STANDARD 14) # 14 (default) | 17 | 20
+if(WIN32)
+  set(BUILD_SHARED_LIBS OFF) # Do we need to add __declspec(dllexport/dllimport) in Kokkos for Windows DLLs ?
+else()
+  set(BUILD_SHARED_LIBS ON)
+endif()
+set(Kokkos_CXX_STANDARD ${CMAKE_CXX_STANDARD}) # 14 (default) | 17 | 20
 set(Kokkos_ENABLE_PROFILING_LOAD_PRINT ON)
 set(Kokkos_ENABLE_EXAMPLES OFF)
 set(Kokkos_ENABLE_TESTS OFF)
-set(Kokkos_ENABLE_LIBDL ON)
-set(Kokkos_ENABLE_HWLOC ON)
-set(Kokkos_ENABLE_LIBRT ON)
+if(NOT WIN32)
+  set(Kokkos_ENABLE_LIBDL ON)
+  set(Kokkos_ENABLE_HWLOC ON)
+  set(Kokkos_ENABLE_LIBRT ON)
+endif()
 
 set_if_match(Kokkos_ENABLE_OPENMP  BACKEND_HOST   OpenMP)
 set_if_match(Kokkos_ENABLE_PTHREAD BACKEND_HOST   Threads)

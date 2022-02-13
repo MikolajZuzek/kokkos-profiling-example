@@ -37,6 +37,7 @@ set(KokkosTools_ENABLE_MPI     ${MPI_FOUND})
 
 #------------------------------------------------------------------------#
 
+set(CMAKE_CXX_STANDARD 17) # Kokkos allows: 14 (default) | 17 | 20
 include(cmake/ConfigureKokkos.cmake)
 
 # Config summary
