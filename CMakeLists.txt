@@ -1,19 +1,16 @@
-#
-# TODO: CUDA - CMAKE_CXX_FLAGS="-Xptxas=-v"
-#
-
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
-project(KokkosWithToolsTest)
+project(KokkosWithToolsTest CXX)
 
 include(cmake/utils.cmake)
 
 #------------------------------------------------------------------------#
 # Paths #
 
-set(Kokkos_ROOT      ${CMAKE_CURRENT_SOURCE_DIR}/kokkos)
-set(KokkosTools_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/kokkos-tools)
+set(Kokkos_SRC_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/kokkos)
+set(KokkosTools_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/kokkos-tools)
 
-set(VTune_ROOT       $ENV{VTUNE_PROFILER_2022_DIR}/sdk)
+set(Kokkos_ROOT "$ENV{Kokkos_ROOT}" CACHE FILEPATH "Path to installed Kokkos")
+set(VTune_ROOT  "$ENV{VTUNE_PROFILER_2022_DIR}/sdk" CACHE FILEPATH "Path to installed Intel VTune Profiler")
 
 #set(VARIORUM_ROOT ${KokkosTools_ROOT}/tpls/variorum/install)
 #file(REAL_PATH ${VARIORUM_ROOT} VARIORUM_ROOT)
@@ -49,10 +46,23 @@ message(STATUS "  Kokkos: Host=${BACKEND_HOST}, Device=${BACKEND_DEVICE}")
 message(STATUS)
 
 # Add Kokkos & Tools
-message(STATUS "=== Kokkos ======================================")
-add_subdirectory(${Kokkos_ROOT} ${CMAKE_CURRENT_BINARY_DIR}/kokkos)
+if(Kokkos_ROOT)
+  try_find_kokkos(${Kokkos_ROOT})
+  if(Kokkos_FOUND)
+    message(STATUS "Found installed Kokkos at ${Kokkos_INSTALL_DIR}")
+  else()
+    message(WARNING "Kokkos not found (Kokkos_ROOT=${Kokkos_ROOT})")
+  endif()
+else()
+  message(STATUS "Hint: Point Kokkos installation with Kokkos_ROOT")
+endif()
+if(NOT Kokkos_FOUND)
+  message(STATUS "=== Kokkos ======================================")
+  set_kokkos_options()
+  add_subdirectory(${Kokkos_SRC_DIR} ${CMAKE_CURRENT_BINARY_DIR}/kokkos)
+endif()
 message(STATUS "=== Tools =======================================")
-add_subdirectory(${KokkosTools_ROOT} ${CMAKE_CURRENT_BINARY_DIR}/kokkos-tools)
+add_subdirectory(${KokkosTools_SRC_DIR} ${CMAKE_CURRENT_BINARY_DIR}/kokkos-tools)
 
 #------------------------------------------------------------------------#
 
