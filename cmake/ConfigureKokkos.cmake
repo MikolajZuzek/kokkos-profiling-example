@@ -1,5 +1,4 @@
-macro(try_find_kokkos Kokkos_ROOT)
-  set(Kokkos_DIR ${Kokkos_ROOT} FORCE)
+macro(try_find_kokkos)
   find_package(Kokkos QUIET)
   if(Kokkos_FOUND)
     # cut .../lib/cmake/Kokkos suffix
@@ -29,7 +28,7 @@ macro(set_kokkos_options)
   set_if_match(Kokkos_ENABLE_OPENMP  BACKEND_HOST   OpenMP)
   set_if_match(Kokkos_ENABLE_PTHREAD BACKEND_HOST   Threads)
   set_if_match(Kokkos_ENABLE_CUDA    BACKEND_DEVICE CUDA)
-  # set(Kokkos_ENABLE_SERIAL ON) # Kokkos will enable serial if nothing else is enabled
+  set_if_match(Kokkos_ENABLE_HIP     BACKEND_DEVICE HIP)
 
   if(Kokkos_ENABLE_CUDA)
     # set(CMAKE_CXX_COMPILER nvcc)

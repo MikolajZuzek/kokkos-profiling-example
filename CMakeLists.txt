@@ -10,6 +10,7 @@ set(Kokkos_SRC_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/kokkos)
 set(KokkosTools_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/kokkos-tools)
 
 set(Kokkos_ROOT "$ENV{Kokkos_ROOT}" CACHE FILEPATH "Path to installed Kokkos")
+set(Variorum_ROOT "$ENV{Variorum_ROOT}" CACHE FILEPATH "Path to installed Variorum")
 set(VTune_ROOT  "$ENV{VTUNE_PROFILER_2022_DIR}/sdk" CACHE FILEPATH "Path to installed Intel VTune Profiler")
 
 #set(VARIORUM_ROOT ${KokkosTools_ROOT}/tpls/variorum/install)
@@ -18,15 +19,26 @@ set(VTune_ROOT  "$ENV{VTUNE_PROFILER_2022_DIR}/sdk" CACHE FILEPATH "Path to inst
 #------------------------------------------------------------------------#
 # Settings #
 
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+
 # Kokkos
 set(BACKEND_HOST) # OpenMP Theads
-set(BACKEND_DEVICE) # CUDA HIP
+set(BACKEND_DEVICE CUDA) # CUDA HIP
 
 # Tools
 set(KokkosTools_ENABLE_SINGLE  ON)
 set(KokkosTools_ENABLE_CALIPER ON)
-set(KokkosTools_ENABLE_APEX    OFF)
-set(KokkosTools_ENABLE_PAPI    OFF)
+set(KokkosTools_ENABLE_APEX    ON)
+set(KokkosTools_ENABLE_PAPI    ON)
+
+# Caliper
+set(CALIPER_BUILD_DOCS OFF)    # Build documentation.
+set(CALIPER_BUILD_TESTING OFF) # Build unit tests.
+set(CALIPER_WITH_FORTRAN OFF)  # Build and install Fortran wrappers.
+if(NOT WIN32)
+  set(CALIPER_WITH_SAMPLER ON)   # Enable time-based sampling (Linux only).
+endif()
+
 
 # Auto-detect MPI
 find_package(MPI QUIET)
@@ -46,15 +58,11 @@ message(STATUS "  Kokkos: Host=${BACKEND_HOST}, Device=${BACKEND_DEVICE}")
 message(STATUS)
 
 # Add Kokkos & Tools
-if(Kokkos_ROOT)
-  try_find_kokkos(${Kokkos_ROOT})
-  if(Kokkos_FOUND)
-    message(STATUS "Found installed Kokkos at ${Kokkos_INSTALL_DIR}")
-  else()
-    message(WARNING "Kokkos not found (Kokkos_ROOT=${Kokkos_ROOT})")
-  endif()
+try_find_kokkos(${Kokkos_ROOT})
+if(Kokkos_FOUND)
+  message(STATUS "Found installed Kokkos at ${Kokkos_INSTALL_DIR}")
 else()
-  message(STATUS "Hint: Point Kokkos installation with Kokkos_ROOT")
+  message(WARNING "Kokkos not found (Kokkos_ROOT=${Kokkos_ROOT})")
 endif()
 if(NOT Kokkos_FOUND)
   message(STATUS "=== Kokkos ======================================")
